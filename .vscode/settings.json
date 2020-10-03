@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "backend\\.venv\\Scripts\\python.exe",
+    "python.linting.pylintPath": "backend\\.venv\\Scripts\\pylint.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+}
