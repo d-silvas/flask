@@ -8,12 +8,19 @@ from resources.item import Item, ItemList
 from db import db
 
 app = Flask(__name__)
-# Turns off the flask sqlalchemy modification tracker, does not turn off the sqlalchemy one
-# (see docs)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../data.db'
+# Turns off the flask sqlalchemy modification tracker, does not turn off
+# the sqlalchemy one (see docs)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # This has to actually be secret (read documentation)
 app.secret_key = 'qqq'
 api = Api(app)
+
+
+@app.before_first_request
+def create_database():
+    db.create_all()
+
 
 # Creates new endpoint /auth
 jwt = JWT(app, authenticate, identity)
