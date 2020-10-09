@@ -6,6 +6,75 @@
 	},
 	"item": [
 		{
+			"name": "/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"username\": \"jojo\", \"password\": \"asdf\"}"
+				},
+				"url": {
+					"raw": "{{url}}/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a4c7fe9-cfd7-4885-9e95-a45b54068220",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"tests['Has access token'] = jsonData.access_token !== undefined;\r",
+							"\r",
+							"postman.setEnvironmentVariable('jwt_token', jsonData.access_token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"username\": \"jojo\", \"password\": \"asdf\"}"
+				},
+				"url": {
+					"raw": "{{url}}/auth",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/items",
 			"request": {
 				"method": "GET",
@@ -17,30 +86,6 @@
 					],
 					"path": [
 						"items"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/item/<name>",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "JWT {{jwt_token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{url}}/item/piano",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"item",
-						"piano"
 					]
 				}
 			},
@@ -61,6 +106,30 @@
 					"mode": "raw",
 					"raw": "{ \"price\": \"222\" }"
 				},
+				"url": {
+					"raw": "{{url}}/item/piano",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"item",
+						"piano"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/item/<name>",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{jwt_token}}",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "{{url}}/item/piano",
 					"host": [
@@ -127,69 +196,89 @@
 			"response": []
 		},
 		{
-			"name": "/auth",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1a4c7fe9-cfd7-4885-9e95-a45b54068220",
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);\r",
-							"tests['Has access token'] = jsonData.access_token !== undefined;\r",
-							"\r",
-							"postman.setEnvironmentVariable('jwt_token', jsonData.access_token)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
+			"name": "/stores",
 			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \"username\": \"jojo\", \"password\": \"asdf\"}"
-				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "{{url}}/auth",
+					"raw": "{{url}}/stores",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"auth"
+						"stores"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/register",
+			"name": "/store/<name>",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \"username\": \"jojo\", \"password\": \"asdf\"}"
-				},
 				"url": {
-					"raw": "{{url}}/register",
+					"raw": "{{url}}/store/zara",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"register"
+						"store",
+						"zara"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/store/<name>",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "JWT {{jwt_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/store/zara",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"store",
+						"zara"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/store/<name>",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDE3NTExMjYsImlhdCI6MTYwMTc1MDgyNiwibmJmIjoxNjAxNzUwODI2LCJpZGVudGl0eSI6MX0.gluscbSi67UQIFtuwXDUT36Ap0380IK8y8s0zl0PJn8"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/store/zara",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"store",
+						"zara"
 					]
 				}
 			},
