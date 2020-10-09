@@ -13,6 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../data.db'
 # Turns off the flask sqlalchemy modification tracker, does not turn off
 # the sqlalchemy one (see docs)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['PROPAGATE_EXCEPTIONS'] = True  # To see flask_jwt errors
 # This has to actually be secret (read documentation)
 app.secret_key = 'qqq'
 api = Api(app)
